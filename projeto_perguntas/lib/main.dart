@@ -1,65 +1,55 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// rodaremos aqui o runApp, que é a porta de entrada do aplicativo
+// e passamos como parâmetro uma instância do widget PerguntaApp
+main() => runApp(PerguntaApp());
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter God',
-      theme: ThemeData(
-        primarySwatch: Colors.brown,
-      ),
-      home: MyHomePage(title: 'God Home Page'),
-    );
-  }
-}
+// classe State que vai gerenciar o estado de PerguntaApp
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+class PerguntaAppState extends State<PerguntaApp> {
+  var perguntaSelecionada = 0;
+  // método
+  void responder() {
+    // setState define o que mudará com a mudança de estado
     setState(() {
-      _counter++;
+      perguntaSelecionada++;
     });
+    print(perguntaSelecionada);
   }
 
-  @override
+  // nessa classe implementamos o método build que recebe um
+  // BuildContext e retorna um widget chamado MaterialApp
+  //
+  @override // responsabiliza o Flutter de sobrescrever todo o contexto (?)
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+    final perguntas = [
+      'Qual é a sua cor favorita?',
+      'Qual o seu animal favorito?',
+    ];
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Perguntas'),
+        ),
+        body: Column(
+          children: [
+            Text(perguntas[perguntaSelecionada]),
+            ElevatedButton(onPressed: responder, child: Text('Resposta 1')),
+            ElevatedButton(onPressed: responder, child: Text('Resposta 2')),
+            ElevatedButton(onPressed: responder, child: Text('Resposta 3')),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class PerguntaApp extends StatefulWidget {
+  // método que cria um estado
+  PerguntaAppState createState() {
+    return PerguntaAppState();
   }
 }
