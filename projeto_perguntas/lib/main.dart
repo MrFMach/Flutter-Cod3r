@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_perguntas/questao.dart';
 
 // rodaremos aqui o runApp, que é a porta de entrada do aplicativo
 // e passamos como parâmetro uma instância do widget PerguntaApp
@@ -6,15 +7,15 @@ main() => runApp(PerguntaApp());
 
 // classe State que vai gerenciar o estado de PerguntaApp
 
-class PerguntaAppState extends State<PerguntaApp> {
-  var perguntaSelecionada = 0;
+class _PerguntaAppState extends State<PerguntaApp> {
+  var _perguntaSelecionada = 0;
   // método
-  void responder() {
+  void _responder() {
     // setState define o que mudará com a mudança de estado
     setState(() {
-      perguntaSelecionada++;
+      _perguntaSelecionada++;
     });
-    print(perguntaSelecionada);
+    print(_perguntaSelecionada);
   }
 
   // nessa classe implementamos o método build que recebe um
@@ -25,6 +26,8 @@ class PerguntaAppState extends State<PerguntaApp> {
     final perguntas = [
       'Qual é a sua cor favorita?',
       'Qual o seu animal favorito?',
+      'Como vai você?',
+      'Qual é o seu nome?'
     ];
     return MaterialApp(
       theme: ThemeData(
@@ -36,10 +39,10 @@ class PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: [
-            Text(perguntas[perguntaSelecionada]),
-            ElevatedButton(onPressed: responder, child: Text('Resposta 1')),
-            ElevatedButton(onPressed: responder, child: Text('Resposta 2')),
-            ElevatedButton(onPressed: responder, child: Text('Resposta 3')),
+            Questao(perguntas[_perguntaSelecionada]),
+            ElevatedButton(onPressed: _responder, child: Text('Resposta 1')),
+            ElevatedButton(onPressed: _responder, child: Text('Resposta 2')),
+            ElevatedButton(onPressed: _responder, child: Text('Resposta 3')),
           ],
         ),
       ),
@@ -49,7 +52,7 @@ class PerguntaAppState extends State<PerguntaApp> {
 
 class PerguntaApp extends StatefulWidget {
   // método que cria um estado
-  PerguntaAppState createState() {
-    return PerguntaAppState();
+  _PerguntaAppState createState() {
+    return _PerguntaAppState();
   }
 }
