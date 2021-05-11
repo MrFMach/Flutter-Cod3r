@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_perguntas/questao.dart';
+import 'package:projeto_perguntas/pergunta.dart';
+import 'package:projeto_perguntas/resposta.dart';
 
 // rodaremos aqui o runApp, que é a porta de entrada do aplicativo
 // e passamos como parâmetro uma instância do widget PerguntaApp
@@ -15,7 +16,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
     setState(() {
       _perguntaSelecionada++;
     });
-    print(_perguntaSelecionada);
   }
 
   // nessa classe implementamos o método build que recebe um
@@ -23,12 +23,43 @@ class _PerguntaAppState extends State<PerguntaApp> {
   //
   @override // responsabiliza o Flutter de sobrescrever todo o contexto (?)
   Widget build(BuildContext context) {
-    final perguntas = [
-      'Qual é a sua cor favorita?',
-      'Qual o seu animal favorito?',
-      'Como vai você?',
-      'Qual é o seu nome?'
+    final List<Map<String, Object>> perguntas = [
+      {
+        'pergunta': 'Em qual região você vive?',
+        'resposta': ['Norte', 'Nordesde', 'Centro-Oeste', 'Sudeste', 'Sul']
+      },
+      {
+        'pergunta': 'Qual é a sua área de atuação?',
+        'resposta': [
+          'Análise de Dados',
+          'Redes',
+          'Sistemas Embarcados',
+          'Front-End',
+          'Back-End'
+        ]
+      },
+      {
+        'pergunta': 'Em que tipo de empresa você trabalha?',
+        'resposta': [
+          'Tecnologia',
+          'Eletroeletrônicos',
+          'Serviços',
+          'Start-Up',
+          'Serviços'
+        ]
+      },
+      {
+        'pergunta': 'Qual é o seu nível atual?',
+        'resposta': ['Estagiário', 'Treinee', 'Pleno', 'Sênior', 'Especialista']
+      },
     ];
+
+    List<Widget> respostas = [];
+
+    for (var textoResposta in perguntas[_perguntaSelecionada]['resposta']) {
+      respostas.add(Resposta(textoResposta, _responder));
+    }
+
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -39,10 +70,8 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: [
-            Questao(perguntas[_perguntaSelecionada]),
-            ElevatedButton(onPressed: _responder, child: Text('Resposta 1')),
-            ElevatedButton(onPressed: _responder, child: Text('Resposta 2')),
-            ElevatedButton(onPressed: _responder, child: Text('Resposta 3')),
+            Pergunta(perguntas[_perguntaSelecionada]['pergunta']),
+            ...respostas,
           ],
         ),
       ),
